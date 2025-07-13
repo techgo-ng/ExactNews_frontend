@@ -1,0 +1,115 @@
+/* === GLOBAL PAGE STYLING === */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Clean, modern font */
+  background-color: #f5f7fa;  /* Light neutral background */
+  margin: 0;
+  padding: 20px;
+  color: #333;  /* Dark gray for readable text */
+}
+
+/* === MAIN HEADING (Top of Page) === */
+h1 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+/* === REFRESH BUTTON (Manually Reload News) === */
+#refreshBtn {
+  display: block;
+  margin: 0 auto 30px auto;  /* Centered with spacing below */
+  padding: 8px 18px;
+  font-size: 14px;
+  background-color: #0070f3;  /* Vivid blue */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* === REFRESH BUTTON ON HOVER === */
+#refreshBtn:hover {
+  background-color: #005ac1;  /* Slightly darker blue */
+}
+
+/* === GRID LAYOUT FOR NEWS CARDS === */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));  /* Responsive columns */
+  gap: 16px;  /* Space between cards */
+}
+
+/* === EACH NEWS CARD CONTAINER === */
+.news-card {
+  display: flex;  /* Side-by-side image and content */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);  /* Subtle drop shadow */
+  transition: transform 0.2s ease;
+  height: 140px;  /* Fixed height for uniformity */
+}
+
+/* === HOVER EFFECT ON NEWS CARD === */
+.news-card:hover {
+  transform: scale(1.02);  /* Grows slightly on hover */
+}
+
+/* === IMAGE ON THE LEFT SIDE OF CARD === */
+.news-card img {
+  width: 120px;
+  height: 100%;
+  object-fit: cover;  /* Fill area without distortion */
+  border-right: 1px solid #eee;
+}
+
+/* === TEXT CONTAINER ON THE RIGHT SIDE === */
+.news-card-content {
+  padding: 10px 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  /* Even spacing between title, summary, link */
+  flex: 1;  /* Take all remaining space */
+}
+
+/* === NEWS TITLE TEXT === */
+.news-card-content h2 {
+  font-size: 16px;
+  margin: 0 0 4px;
+  line-height: 1.3em;
+  font-weight: 600;
+  color: #222;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;  /* Prevents wrapping to next line */
+}
+
+/* === SUMMARY AND METADATA TEXT === */
+.news-card-content p {
+  font-size: 13px;
+  margin: 2px 0;
+  line-height: 1.4em;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;  /* Limit to 2 lines of text */
+  -webkit-box-orient: vertical;
+}
+
+/* === "READ MORE" LINK === */
+.news-card-content a {
+  align-self: flex-start;
+  font-size: 13px;
+  color: #0070f3;
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+/* === "READ MORE" HOVER EFFECT === */
+.news-card-content a:hover {
+  text-decoration: underline;
+}
