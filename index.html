@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<!--Synced to Github on July 8th, 2025-->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ExactNews brings you real-time curated news headlines from the BBC." />
+  <meta name="keywords" content="news, BBC, world news, headlines, ExactNews, latest news" />
+  <meta name="author" content="TechGo Limited" />
+  <meta property="og:title" content="ExactNews — BBC Headlines" />
+  <meta property="og:description" content="Get the latest curated news headlines from BBC World, updated in real time." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://exactnews_frontend.example.com" />
+  <meta property="og:image" content="https://example.com/logo.png" />
   <title>ExactNews — BBC Headlines</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>📰 BBC News Headlines</h1>
   <button id="refreshBtn">🔄 Refresh News</button>
+
+  <!-- Spinner -->
+  <div id="spinner" role="status" aria-live="polite" aria-busy="true"></div>
+
+  <!-- News content container -->
   <div id="news-container"></div>
 
-  <!-- JavaScript will inject news items here -->
+  <!-- Error or status log -->
+  <div id="log" style="color: red; margin-top: 1rem;"></div>
 
+  <!-- JavaScript loader -->
   <script src="bbc_news.js"></script>
 </body>
 </html>
