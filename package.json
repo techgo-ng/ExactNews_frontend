@@ -1,0 +1,25 @@
+{
+  "name": "exactnews_frontend",
+  "version": "1.0.0",
+  "main": "bbc_news.js",
+  "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "serve": "vite preview"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techgo-ng/ExactNews_frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/techgo-ng/ExactNews_frontend/issues"
+  },
+  "homepage": "https://github.com/techgo-ng/ExactNews_frontend#readme",
+  "description": "",
+  "devDependencies": {
+    "vite": "^7.0.4"
+  }
+}
