@@ -65,6 +65,15 @@ h1 {
   border-right: 1px solid #eee;
 }
 
+.news-card-content {
+  padding: 10px 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
 /* === TEXT CONTAINER ON THE RIGHT SIDE === */
 .news-card-content {
   padding: 10px 14px;
@@ -85,6 +94,14 @@ h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;  /* Prevents wrapping to next line */
+}
+.news-card-content {
+  padding: 10px 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
 }
 
 /* === SUMMARY AND METADATA TEXT === */
