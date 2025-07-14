@@ -11,6 +11,7 @@ function fetchAndRenderNews() {
     })
     .then(data => {
       const container = document.getElementById("news-container");
+container.className = "news-grid";  // 👈 Add this line
       container.innerHTML = ""; // Clear previous content
 
       data.forEach(item => {
