@@ -1,33 +1,42 @@
 function fetchAndRenderNews() {
+  const logDiv = document.getElementById("log");
+  logDiv.textContent = "📡 Fetching BBC news...";
+
   fetch("https://exactnews-backend.onrender.com/bbc")
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then(data => {
       const container = document.getElementById("news-container");
-      container.innerHTML = ""; // clear existing news
+      container.innerHTML = ""; // Clear previous content
 
       data.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "news-card";
+        const card = document.createElement("div")        card.className = "news-card";
 
-        card.innerHTML = `
-          <img src="${item.image || 'fallback.jpg'}" alt="News Image">
-          <div class="news-details">
-            <h3>${item.title}</h3>
-            <p>${item.summary}</p>
-            <a href="${item.link}" target="_blank">Read more</a>
-          </div>
-        `;
+      card.innerHTML = `
+  <img src="${item.image || 'fallback.jpg'}" alt="News Image">
+  <div class="news-details">
+    <h3>${item.title}</h3>
+    <p>${item.summary}</p>
+    <a href="${item.link}" target="_blank" class="read-more">📖 Read more</a>
+  </div>
+`;
 
         container.appendChild(card);
       });
+
+      logDiv.textContent = "✅ News successfully loaded.";
     })
     .catch(error => {
-      console.error("Failed to fetch news:", error);
+      logDiv.textContent = "❌ Failed to fetch news: " + error.message;
     });
 }
 
-// Fetch immediately on page load
+// Call on page load
 fetchAndRenderNews();
 
-// Then every 60 seconds
+// Auto-refresh every 60 seconds
 setInterval(fetchAndRenderNews, 60000);
