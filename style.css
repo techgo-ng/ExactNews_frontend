@@ -113,3 +113,10 @@ h1 {
 .news-card-content a:hover {
   text-decoration: underline;
 }
+.read-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #0077cc;
+  font-weight: bold;
+  text-decoration: underline;
+}
