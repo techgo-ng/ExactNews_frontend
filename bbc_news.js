@@ -18,7 +18,7 @@ function fetchAndRenderNews() {
 
       card.innerHTML = `
   <img src="${item.image || 'fallback.jpg'}" alt="News Image">
-  <div class="news-details">
+  <div class="news-card-content">
     <h3>${item.title}</h3>
     <p>${item.summary}</p>
     <a href="${item.link}" target="_blank" class="read-more">📖 Read more</a>
