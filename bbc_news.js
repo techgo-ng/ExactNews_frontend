@@ -64,3 +64,6 @@ fetchAndRenderNews();
 
 // Auto-refresh every 60 seconds
 setInterval(fetchAndRenderNews, 60000);
+
+// Manual refresh on button click
+document.getElementById("refreshBtn").addEventListener("click", fetchAndRenderNews);
