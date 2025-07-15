@@ -93,3 +93,9 @@ h1 {
   -webkit-box-orient: vertical;
 }
 
+.news-card-content small.meta {
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+  display: block;
+}
