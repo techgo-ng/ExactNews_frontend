@@ -1,73 +1,35 @@
-// ✅ Final bbc_news.js — Includes <h3>, no "Read more", with source + timestamp
-
-function fetchAndRenderNews() {
+async function fetchAndRenderNews() {
   const logDiv = document.getElementById("log");
-  logDiv.textContent = "📡 Fetching BBC news...";
+  logDiv.textContent = "📡 Fetching Nigerian news...";
 
-  fetch("https://exactnews-backend.onrender.com/bbc")
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then(data => {
-      const container = document.getElementById("news-container");
-      container.className = "news-grid";
-      container.innerHTML = ""; // Clear old news
+  try {
+    const response = await fetch("https://exactnews-backend.onrender.com/news/africa/nigeria");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-      data.sort((a, b) => new Date(b.published) - new Date(a.published));
+    const newsItems = await response.json();
 
-      data.forEach(item => {
-        const card = document.createElement("a");
-        card.className = "news-card";
-        card.href = item.link;
-        card.target = "_blank";
-        card.rel = "noopener noreferrer";
+    const container = document.getElementById("news-container");
+    container.innerHTML = ""; // Clear any existing content
 
-        const publishedAgo = timeAgo(item.published);
-        const source = "BBC News";
+    newsItems.slice(0, 50).forEach(item => {
+      const card = document.createElement("div");
+      card.className = "news-card";
 
-        card.innerHTML = `
-          <img src="${item.image || 'fallback.jpg'}" alt="News Image">
-          <div class="news-card-content">
-            <h3>${item.title}</h3>
-            <p>${item.summary}</p>
-            <small class="meta">${source} • ${publishedAgo}</small>
-          </div>
-        `;
+      card.innerHTML = `
+        <h2>${item.title}</h2>
+        <p><em>${item.source} | ${item.published}</em></p>
+        ${item.image ? `<img src="${item.image}" alt="News image" />` : ""}
+        <p>${item.summary}</p>
+        <a href="${item.link}" target="_blank">Read more</a>
+      `;
 
-        container.appendChild(card);
-      });
-
-      logDiv.textContent = "✅ News successfully loaded.";
-    })
-    .catch(error => {
-      logDiv.textContent = "❌ Failed to fetch news: " + error.message;
+      container.appendChild(card);
     });
+
+    logDiv.textContent = `✅ Fetched ${newsItems.length} articles`;
+  } catch (error) {
+    logDiv.textContent = `❌ Error: ${error.message}`;
+  }
 }
-
-// ⏱️ Utility: Converts time into “x minutes ago”
-function timeAgo(published) {
-  const now = new Date();
-  const pubTime = new Date(published);
-  const diffMs = now - pubTime;
-  const mins = Math.floor(diffMs / 60000);
-  const hours = Math.floor(mins / 60);
-
-  if (mins < 1) return "Just now";
-  if (mins < 60) return `${mins} min${mins !== 1 ? "s" : ""} ago`;
-  if (hours < 24) return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
-  return pubTime.toLocaleDateString();
-}
-
-// Run on page load
-fetchAndRenderNews();
-
-// Auto-refresh every 60 seconds
-setInterval(fetchAndRenderNews, 60000);
-
-// Manual refresh on button click
-document.getElementById("refreshBtn").addEventListener("click", fetchAndRenderNews);
-
-
