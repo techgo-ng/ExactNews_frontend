@@ -16,6 +16,8 @@ function fetchAndRenderNews() {
       container.className = "news-grid";
       container.innerHTML = ""; // Clear old news
 
+      data.sort((a, b) => new Date(b.published) - new Date(a.published));
+
       data.forEach(item => {
         const card = document.createElement("a");
         card.className = "news-card";
