@@ -68,7 +68,4 @@ setInterval(fetchAndRenderNews, 60000);
 // Manual refresh on button click
 document.getElementById("refreshBtn").addEventListener("click", fetchAndRenderNews);
 
-
-document.getElementById("refreshBtn").addEventListener("click", () => {
-  alert("Refresh button clicked!");
 });
