@@ -1,62 +1,80 @@
+// news.js — Clean & tested version
+const API_URL = "https://exactnews-backend.onrender.com/nigeria"; // Change to match your backend route
+const refreshBtn = document.getElementById("refreshBtn");
+const newsContainer = document.getElementById("news-container");
+const logDiv = document.getElementById("log");
 
-  alert("🟢 news.js is running");
-  document.addEventListener("DOMContentLoaded", () => {
-  const logDiv = document.getElementById("log") || createLogDiv();
-  const newsContainer = document.getElementById("news");
+function log(msg, success = false) {
+  const prefix = success ? "✅" : "📡";
+  logDiv.textContent += `\n${prefix} ${msg}`;
+}
 
-  log("📡 Starting fetch for Nigerian news...");
+function showError(error) {
+  logDiv.textContent += `\n❌ Fetch error: ${error.message || error}`;
+}
 
-  fetch("https://exactnews-backend.onrender.com/news/africa/nigeria")
+function clearNews() {
+  if (newsContainer) {
+    newsContainer.innerHTML = "";
+  }
+}
+
+function renderNews(newsArray) {
+  if (!newsContainer) {
+    showError("Missing #news-container");
+    return;
+  }
+
+  clearNews();
+  log(`Rendering top ${newsArray.length} headlines...`, true);
+
+  newsArray.slice(0, 5).forEach(item => {
+    const newsCard = document.createElement("div");
+    newsCard.className = "news-card";
+
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+
+    const summary = document.createElement("p");
+    summary.innerHTML = item.summary;
+
+    const link = document.createElement("a");
+    link.href = item.link;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "🔗 Read more";
+
+    const meta = document.createElement("p");
+    meta.innerHTML = `<em>🗞️ ${item.source}</em> — <time>${item.published}</time>`;
+
+    newsCard.appendChild(title);
+    newsCard.appendChild(summary);
+    newsCard.appendChild(link);
+    newsCard.appendChild(meta);
+
+    newsContainer.appendChild(newsCard);
+  });
+}
+
+function fetchNews() {
+  logDiv.textContent = "📡 Starting fetch for Nigerian news...";
+
+  fetch(API_URL)
     .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not OK");
       return response.json();
     })
     .then(data => {
-      log("✅ News data fetched successfully.");
-      log("📰 Rendering top 5 headlines:");
-
-      const limitedNews = data.slice(0, 5);
-      limitedNews.forEach(article => {
-        const box = document.createElement("div");
-        box.className = "news-box";
-
-        const title = document.createElement("h3");
-        title.textContent = article.title;
-
-        const link = document.createElement("a");
-        link.href = article.link;
-        link.textContent = "Read more";
-        link.target = "_blank";
-
-        box.appendChild(title);
-        box.appendChild(link);
-        newsContainer.appendChild(box);
-
-        log(`• ${article.title}`);
-      });
+      log("News data fetched successfully.", true);
+      renderNews(data);
     })
-    .catch(error => {
-      log(`❌ Fetch error: ${error.message}`);
-    });
+    .catch(showError);
+}
 
-  function log(message) {
-    const p = document.createElement("p");
-    p.textContent = message;
-    logDiv.appendChild(p);
-  }
+// Allow manual refresh
+if (refreshBtn) {
+  refreshBtn.addEventListener("click", fetchNews);
+}
 
-  function createLogDiv() {
-    const div = document.createElement("div");
-    div.id = "log";
-    div.style.background = "#fffbe6";
-    div.style.border = "1px solid #ccc";
-    div.style.padding = "10px";
-    div.style.margin = "10px 0";
-    div.style.fontFamily = "monospace";
-    div.style.fontSize = "0.9em";
-    document.body.insertBefore(div, document.body.firstChild);
-    return div;
-  }
-});
+// Auto fetch on page load
+window.addEventListener("DOMContentLoaded", fetchNews);
