@@ -1,5 +1,5 @@
 // news.js — Clean & tested version
-const API_URL = "https://exactnews-backend.onrender.com/nigeria"; // Change to match your backend route
+const API_URL = "https://exactnews-backend.onrender.com/news/africa/nigeria"; // Change to match your backend route
 const refreshBtn = document.getElementById("refreshBtn");
 const newsContainer = document.getElementById("news-container");
 const logDiv = document.getElementById("log");
