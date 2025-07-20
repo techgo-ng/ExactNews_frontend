@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logDiv = document.getElementById("log");
   const newsContainer = document.getElementById("news");
 
-  // Log start
-  logDiv.textContent = "📡 Starting fetch for Nigerian news...";
+  logDiv.textContent = "📡 Starting fetch for news...";
 
   const startTime = performance.now();
 
