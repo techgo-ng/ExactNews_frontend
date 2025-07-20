@@ -1,80 +1,70 @@
-// news.js — Clean & tested version
-const API_URL = "https://exactnews-backend.onrender.com/news/africa/nigeria"; // Change to match your backend route
-const refreshBtn = document.getElementById("refreshBtn");
-const newsContainer = document.getElementById("news-container");
-const logDiv = document.getElementById("log");
+// news.js
 
-function log(msg, success = false) {
-  const prefix = success ? "✅" : "📡";
-  logDiv.textContent += `\n${prefix} ${msg}`;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const logDiv = document.getElementById("log");
+  const newsContainer = document.getElementById("news");
 
-function showError(error) {
-  logDiv.textContent += `\n❌ Fetch error: ${error.message || error}`;
-}
-
-function clearNews() {
-  if (newsContainer) {
-    newsContainer.innerHTML = "";
-  }
-}
-
-function renderNews(newsArray) {
-  if (!newsContainer) {
-    showError("Missing #news-container");
-    return;
-  }
-
-  clearNews();
-  log(`Rendering top ${newsArray.length} headlines...`, true);
-
-  newsArray.slice(0, 5).forEach(item => {
-    const newsCard = document.createElement("div");
-    newsCard.className = "news-card";
-
-    const title = document.createElement("h3");
-    title.textContent = item.title;
-
-    const summary = document.createElement("p");
-    summary.innerHTML = item.summary;
-
-    const link = document.createElement("a");
-    link.href = item.link;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.textContent = "🔗 Read more";
-
-    const meta = document.createElement("p");
-    meta.innerHTML = `<em>🗞️ ${item.source}</em> — <time>${item.published}</time>`;
-
-    newsCard.appendChild(title);
-    newsCard.appendChild(summary);
-    newsCard.appendChild(link);
-    newsCard.appendChild(meta);
-
-    newsContainer.appendChild(newsCard);
-  });
-}
-
-function fetchNews() {
+  // Log start
   logDiv.textContent = "📡 Starting fetch for Nigerian news...";
 
-  fetch(API_URL)
-    .then(response => {
-      if (!response.ok) throw new Error("Network response was not OK");
-      return response.json();
-    })
+  const startTime = performance.now();
+
+  fetch("https://extranews-backend.onrender.com/news/africa/nigeria")
+    .then(response => response.json())
     .then(data => {
-      log("News data fetched successfully.", true);
-      renderNews(data);
+      const fetchTime = ((performance.now() - startTime) / 1000).toFixed(2);
+      logDiv.textContent = `✅ Topmost exactnews fetched successfully. ✅ Rendered ${data.length} items in ${fetchTime}s`;
+
+      const grouped = {};
+      const others = [];
+
+      data.forEach(item => {
+        const source = item.source || "Other";
+        if (!grouped[source]) grouped[source] = [];
+        if (grouped[source].length < 2) {
+          grouped[source].push(item);
+        } else {
+          others.push(item);
+        }
+      });
+
+      // Show top 2 items per source
+      Object.keys(grouped).forEach(source => {
+        grouped[source].forEach(news => {
+          renderNewsCard(newsContainer, news, source, true);
+        });
+      });
+
+      // Shuffle and render the rest
+      shuffleArray(others);
+      others.forEach(news => {
+        renderNewsCard(newsContainer, news, news.source || "Other", false);
+      });
     })
-    .catch(showError);
+    .catch(error => {
+      logDiv.textContent = `❌ Failed to fetch news: ${error}`;
+    });
+});
+
+function renderNewsCard(container, item, source, highlight) {
+  const card = document.createElement("div");
+  card.className = `news-card ${highlight ? "highlight" : ""}`;
+
+  card.innerHTML = `
+    <h3>${item.title}</h3>
+    <p class="source">${source}</p>
+    ${item.image ? `<img src="${item.image}" alt="News Image">` : ""}
+    <p>${item.summary}</p>
+    <a href="${item.link}" target="_blank">Read more →</a>
+    <p class="date">${item.published || ""}</p>
+  `;
+
+  container.appendChild(card);
 }
 
-// Allow manual refresh
-if (refreshBtn) {
-  refreshBtn.addEventListener("click", fetchNews);
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
-
-// Auto fetch on page load
-window.addEventListener("DOMContentLoaded", fetchNews);
