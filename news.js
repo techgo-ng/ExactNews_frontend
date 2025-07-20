@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const startTime = performance.now();
 
-  fetch("https://extranews-backend.onrender.com/news/africa/nigeria")
+  fetch("https://exactnews-backend.onrender.com/news/africa/nigeria")
     .then(response => response.json())
     .then(data => {
       const fetchTime = ((performance.now() - startTime) / 1000).toFixed(2);
