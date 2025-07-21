@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "bbc_news.js",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "serve": "vite preview"
-},
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/techgo-ng/ExactNews_frontend.git"
@@ -20,6 +20,9 @@
   "homepage": "https://github.com/techgo-ng/ExactNews_frontend#readme",
   "description": "",
   "devDependencies": {
+    "esbuild": "^0.20.2",
+    "nanoid": "^5.0.2",
+    "rollup": "^4.16.3",
     "vite": "^7.0.4"
   }
 }
