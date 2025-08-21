@@ -1,6 +1,6 @@
-/* ✅ style.css — Updated to match bbc_news.js with <h3> and simplified links */
+/* ✅ style.css — Updated for accessibility and loading spinner */
 
-
+/* Tabs styling */
 .tabs {
   display: flex;
   justify-content: center;
@@ -23,10 +23,16 @@
   box-shadow: none;
 }
 
-/*  Hover effect */
+/* Hover effect */
 .tab-button:hover {
   background-color: #e0e0e0;
   color: #000;
+}
+
+/* Keyboard focus outline for accessibility */
+.tab-button:focus {
+  outline: 3px solid #ffa500;
+  outline-offset: 2px;
 }
 
 /* Active tab styling */
@@ -51,6 +57,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Refresh button style (if used) */
 #refreshBtn {
   display: block;
   margin: 0 auto 30px auto;
@@ -68,12 +75,14 @@ h1 {
   background-color: #005ac1;
 }
 
+/* News container grid */
 .news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 16px;
 }
 
+/* News card styles */
 .news-card {
   display: flex;
   background-color: #fff;
@@ -137,3 +146,9 @@ h1 {
   display: block;
 }
 
+/* Loading spinner for the #log element */
+#log {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  position: relative;

@@ -12,22 +12,19 @@
     <p class="subtitle">Real-Time Global News Aggregator</p>
   </header>
 
-<!-- Tabbed Categories -->
+  <!-- Tabbed Categories -->
+  <div class="tabs" role="tablist" aria-label="News Categories">
+    <button class="tab-button active" data-category="general" role="tab" aria-selected="true" aria-controls="news-container">General</button>
+    <button class="tab-button" data-category="sports" role="tab" aria-selected="false" aria-controls="news-container">Sports</button>
+    <button class="tab-button" data-category="entertainment" role="tab" aria-selected="false" aria-controls="news-container">Entertainment</button>
+    <button class="tab-button" data-category="tech" role="tab" aria-selected="false" aria-controls="news-container">Tech</button>
+  </div>
 
-<div class="tabs">
-  <button class="tab-button" data-category="general">General</button>
-  <button class="tab-button" data-category="sports">Sports</button>
-  <button class="tab-button" data-category="entertainment">Entertainment</button>
-  <button class="tab-button" data-category="tech">Tech</button>
-</div>
-
-<!-- 📡 Fetch Status -->
-  <div id="log">📡 Loading news...</div>
+  <!-- 📡 Fetch Status -->
+  <div id="log" role="status" aria-live="polite">📡 Loading news...</div>
 
   <!-- 🗞️ News Container -->
-
-
- <main id="news-container" class="news-grid"></main>
+  <main id="news-container" class="news-grid" role="region" aria-live="polite" aria-label="News Articles"></main>
 
   <script src="news.js"></script>
 </body>
